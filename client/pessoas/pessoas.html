@@ -1,0 +1,199 @@
+<div ng-controller="OpenController"><nav class="navbar navbar-toggleable-md navbar-inverse bg-inverse">
+  <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <a class="navbar-brand" href="#/"><span class="fa fa-home"></span> TEST FULL STACK</a>
+  <div class="collapse navbar-collapse" id="navbarNav">
+    <ul class="navbar-nav">
+      <li class="nav-item active">
+        <a class="nav-link" href="#/Pessoas">Pessoas <span class="sr-only"></span></a>
+      </li>
+             <input class="form-control mr-sm-2" ng-model="buscarModel" placeholder="Insira o nome" aria-label="Search">
+            </ul>
+  </div>
+  
+</nav>
+
+<div class="container-fluid content">
+  <div class="row">
+    <div class="col-xs-12 col-lg-4">
+    <h2>Cadastrar Pessoa</h2>
+      <form novalidate name="submitTicketForm" class='submitTicketForm' ng-submit='cadastrarPessoa(pessoa)'>
+        <div class="form-group">
+          <label>Nome</label>
+          <input type="text" class="form-control" ng-model="pessoa.nome">
+        </div>
+        <div class="form-group">
+          <label>CPF</label>
+          <input type="text" class="form-control" ng-model="pessoa.cpf"></input>
+        </div>
+        <div class="form-group">
+          <label>CNPJ</label>
+          <input type="text" class="form-control" ng-model="pessoa.cnpj"></input>
+        </div>
+        <div class="form-group">
+          <label>Celular</label>
+          <input type="text" class="form-control" ng-model="pessoa.celular"></input>
+        </div>
+        <div class="form-group">
+          <label>Telefone</label>
+          <input type="text" class="form-control" ng-model="pessoa.telefone"></input>
+        </div>
+        <div class="form-group">
+          <label>CEP</label>
+          <input type="text" class="form-control" ng-model="pessoa.cep"></input>
+        </div>
+        <div class="form-group">
+          <label>numero</label>
+        </div>
+        <input type="text" class="form-control" ng-model="pessoa.numero"></input>
+        <div class="form-group">
+          <label>email</label>
+          <input type="text" class="form-control" ng-model="pessoa.email"></input>
+        </div>
+        
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </form>
+    </div>
+    <div class="col-xs-12 col-lg-8">
+      <h2 class="ticket-section-header">Pessoas cadastradas</h2>
+      <div class='tickets'>
+        <div class='ticket' ng-repeat="pessoa in data.pessoas |filter:{nome:buscarModel}">
+          <div class="row ticket-heading">
+            <div class="col-md-3">{{ pessoa.nome }}</div>
+            <div class="col-md-3">cpf:<span class="ticket-subject">{{ pessoa.cpf }}</span></div>
+            <div class="col-md-3">tel:<span class="ticket-subject">{{ pessoa.telefone }}</span></div>
+          </div> <!-- /row -heading- -->
+
+          <div class="row ticket-footer">
+            <div class="col-md-1"><br /><span class="ticket-delete fa fa-trash-o" ng-click="deletePessoa(pessoa)"></span></div>
+            <div class="col-md-1"><br /><span class="ticket-archive fa fa-refresh" ng-click="box(pessoa)" data-toggle="modal" data-target="#updateModal"></span></div>
+            <div class="col-md-1"><br /><span class="ticket-archive fa fa-file" ng-click="box(pessoa)" data-toggle="modal" data-target="#detailsModal"></span></div>
+            <div class="col">
+              email
+              <br />
+              {{ pessoa.email }}
+            </div>
+            <div class="col">
+              Criado
+              <br  />
+              {{ pessoa.criadoEm }}
+            </div>
+            <div class="col">
+              Alterado
+              <br  />
+              {{ pessoa.alteradoEm }}
+            </div>
+            
+          </div> <!-- /row -footer- -->
+        </div>
+      </div>
+    </div>
+  </div> <!-- /row -->
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="updateModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Atualizar Dados</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form novalidate name="submitTicketForm" class='submitTicketForm' ng-submit='cadastrarPessoa(pessoa)'>
+          <div class="form-group">
+            <label>Nome</label>
+            <input type="text" class="form-control" ng-model="modal.nome">
+          </div>
+          <div class="form-group">
+            <label>CPF</label>
+            <input type="text" class="form-control" ng-model="modal.cpf"></input>
+          </div>
+          <div class="form-group">
+            <label>CNPJ</label>
+            <input type="text" class="form-control" ng-model="modal.cnpj"></input>
+          </div>
+          <div class="form-group">
+            <label>Celular</label>
+            <input type="text" class="form-control" ng-model="modal.celular"></input>
+          </div>
+          <div class="form-group">
+            <label>Telefone</label>
+            <input type="text" class="form-control" ng-model="modal.telefone"></input>
+          </div>
+          <div class="form-group">
+            <label>CEP</label>
+            <input type="text" class="form-control" ng-model="modal.cep"></input>
+          </div>
+          <div class="form-group">
+            <label>numero</label>
+          </div>
+          <input type="text" class="form-control" ng-model="modal.numero"></input>
+          <div class="form-group">
+            <label>email</label>
+            <input type="text" class="form-control" ng-model="modal.email"></input>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+        <button type="button" class="btn btn-primary"  data-dismiss="modal" ng-click="updatePessoa(modal)" >Alterar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Modal  visualizar-->
+<div class="modal fade" id="detailsModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel"><span ng-bind="modal.nome"></span></h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label>CPF</label>
+          <span ng-bind="modal.cpf"></span>
+        </div>
+        <div class="form-group">
+          <label>CNPJ</label>
+          <span ng-bind="modal.cnpj"></span>
+        </div>
+        <div class="form-group">
+          <label>Celular</label>
+          <span ng-bind="modal.celular"></span>
+        </div>
+        <div class="form-group">
+          <label>Telefone</label>
+          <span ng-bind="modal.telefone"></span>
+        </div>
+        <div class="form-group">
+          <label>CEP</label>
+          <span ng-bind="modal.cep"></span>
+        </div>
+        <div class="form-group">
+          <label>numero</label>
+        </div>
+        <span ng-bind="modal.numero"></span>
+        <div class="form-group">
+          <label>email</label>
+          <span ng-bind="modal.email"></span>
+        </div>
+      
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
+        
+      </div>
+    </div>
+  </div>
+</div>
+</div>
